@@ -1,0 +1,4 @@
+node_modules
+.env
+/controllers/product.js
+/routes/product.js

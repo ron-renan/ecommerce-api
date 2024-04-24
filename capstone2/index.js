@@ -8,6 +8,7 @@ const session = require('express-session');
 // Allows us to control the app's Cross Origin Resource Sharing settings
 const cors = require('cors');
 const userRoutes = require('./routes/user')
+const productRoutes = require('./routes/product')
 
 
 const app = express();
@@ -27,6 +28,7 @@ mongoose.connect("mongodb+srv://admin:admin1234@wdc028-course-booking.hdugpfx.mo
 mongoose.connection.once('open', () => console.log('Now connected to MongoDB Atlas.'));
 
 app.use("/users",  userRoutes)
+app.use("/products", productRoutes)
 
 
 //"process.env.PORT || port" will use the environment variable if it is available OR will used port 4000 if none defined

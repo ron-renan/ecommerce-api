@@ -100,18 +100,38 @@ module.exports.setAsAdmin = async (req, res, next) => {
 
 module.exports.updatePassword = async (req, res) => {
   try {
-    const {newPassword} = req.body;
-    const {id} = req.user;
+   
+    const { currentPassword, newPassword } = req.body;
 
-    // Hash the new password
+    const { id } = req.user; // Extracting user ID
+
     const hashedPassword = await bcrypt.hash(newPassword, 10);
 
-    // Update user's password in the database
-    await User.findByIdAndUpdate(id, { password: hashedPassword });
+    // Find the user by userId
+    const userToUpdate = await User.findById(id);
 
-    res.status(200).json({ message: 'Password reset successful' });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
+     if (!userToUpdate) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    //check current password on dbase vs password encoded
+
+    bcrypt.compare(currentPassword, userToUpdate.password, (err, result) =>{
+
+    	if (err){
+    		return res.status(400).send({error: 'Error in find'})
+    	} 
+    	if (result){
+    		console.log('Password match');
+    		userToUpdate.password = hashedPassword;
+    		userToUpdate.save();
+    		res.status(200).json({message: 'Password updated Successfully', updatedUser : userToUpdate});
+    	}else{
+    		return res.status(200).send('Current password did not match. Try again!');
+    	}
+    })
+
+    } catch (error){
+		console.error(error);
+		res.status(500).json({message: 'Internal server error'});
+	}
 }

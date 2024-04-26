@@ -13,6 +13,31 @@ Dummy customer
 
 Features:
 
+Features by Student-1
+
+User Resources:
+User registration,
+Update Password
+
+Product Resources:
+Create Product(Admin only),
+Update Product,
+Archive Product,
+Activate Product
+
+Cart Resources:
+Add to Cart,
+Subtotal for each item,
+Total price for all items,
+Change product quantities,
+Update subtotal after change product quantity,
+Update total price after change product quantity
+
+Other Resources:
+Retrieve authenticated user's orders
+
+
+
 Features by Student-2
 
 User Resources:
@@ -20,39 +45,20 @@ User authentication
 Set user as admin(Admin only)
 Retrieve User Details
 
-
 Product Resources:
-Get active products
-Get product details by productId
-Search product by product name
+Get active products,
+Get product details by productId,
+Search product by product name,
 Search product by price range
 
 Cart Resources:
-Clear cart
+Get user's Cart,
+Remove item from the user's cart,
+Clear the user's cart
 
-Features by Student-1
-
-User Resources:
-User registration
-Update Password
-
-Product Resources:
-Create Product(Admin only)
-Update Product
-Archive Product
-Activate Product
-
-Cart Resources:
-Get User's Cart
-Add to Cart
-Subtotal for each item
-Total price for all items
-Change product quantities
-Remove products from cart
-
+Added Features:
+Checkout an item from the user's cart
 
 Other Resources:
-Non-admin User checkout (Create Order)
-Retrieve Authenticated user's orders
-Retrieve authenticated user's orders
+Non-admin User checkout (Create Order),
 Retrieve all orders (Admin only)

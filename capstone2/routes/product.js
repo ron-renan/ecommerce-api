@@ -17,8 +17,8 @@ router.patch('/:productId/archive', verify, verifyAdmin, productController.archi
 
 router.patch('/:productId/activate', verify, verifyAdmin, productController.activateProduct);
 
-router.post('/search', productController.searchProductByName);
+router.post('/searchByName', productController.searchProductByName);
 
-router.post('/search-products', productController.searchProductByPriceRange);
+router.post('/searchByPrice', productController.searchProductByPriceRange);
 
 module.exports = router;

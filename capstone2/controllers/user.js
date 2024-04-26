@@ -1,5 +1,7 @@
 const bcrypt = require('bcrypt');
 const User = require ("../models/User");
+const Cart = require("../models/Cart");
+const Product =require("../models/Product")
 const auth = require("../auth");
 
 module.exports.registerUser = (req, res) => {
@@ -135,3 +137,4 @@ module.exports.updatePassword = async (req, res) => {
 		res.status(500).json({message: 'Internal server error'});
 	}
 }
+

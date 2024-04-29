@@ -13,8 +13,4 @@ router.delete("/:productId/removeFromCart", verify, cartController.removeFromCar
 
 router.delete("/clearCart", verify, cartController.clearCart);
 
-router.post('/checkout', verify, cartController.checkout);
-
-router.post('/checkout-item', verify, cartController.checkoutItem);
-
 module.exports = router;

@@ -1,10 +1,20 @@
 const bcrypt = require('bcrypt');
 const User = require ("../models/User");
-const Cart = require("../models/Cart");
-const Product =require("../models/Product")
 const auth = require("../auth");
 
-module.exports.registerUser = (req, res) => {
+module.exports.registerUser = async (req, res) => {
+
+	const checkUser = await User.findOne({email: req.body.email});
+
+    if (checkUser){
+
+        if (checkUser.firstName === req.body.firstName && checkUser.lastName === req.body.lastName){
+            return res.status(400).json({error: 'User is already registered. Please proceed to sign in.'});    
+        } else {
+            return res.status(400).json({error: 'Email address already used by other user. Please use other email address.'})
+        }
+        
+    }
 	// Checks if the email is in the right format
    if (!req.body.email.includes("@")){
        return res.status(400).send({error: "Email Invalid"});
@@ -81,23 +91,32 @@ module.exports.getProfile = (req, res) => {
 	        });
 		}
 
-module.exports.setAsAdmin = async (req, res, next) => {
-  try {
-    const userId = req.params.id;
+module.exports.setAsAdmin = async (req, res) => {
+	const { id } = req.params;
+ try {
     
-    // Check if the logged-in user is an admin
+
+    // Check if the user making the request is an admin
     if (!req.user.isAdmin) {
-      return res.status(403).json({ message: "Unauthorized access" });
+      return res.status(403).json({ message: "Unauthorized" });
     }
 
-    // Update user's isAdmin status
-    await User.findByIdAndUpdate(userId, { isAdmin: true });
+    // Find the user by id and update isAdmin status
+    const user = await User.findById(id);
 
-    res.json({ message: "User set as admin successfully" });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    user.isAdmin = true;
+    await user.save();
+
+    return res.status(200).json({ message: "User isAdmin status updated successfully" });
   } catch (error) {
-    next(error);
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
   }
-};		
+}
 
 
 module.exports.updatePassword = async (req, res) => {

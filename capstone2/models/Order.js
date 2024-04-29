@@ -32,6 +32,7 @@ default: Date.now
 },
 status : {
 type : String,
+enum : ['Pending', 'Completed', 'Cancelled'],
 default : 'Pending'
 }
 });

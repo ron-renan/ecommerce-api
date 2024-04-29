@@ -5,7 +5,7 @@ Student-2. Renante Escreza
 
 Admin user:
     email: nobita@gmail.com
-    password: crybaby321
+    password: california123
 
 Dummy customer 
     email: shisuka@gmail.com
@@ -33,9 +33,8 @@ Change product quantities,
 Update subtotal after change product quantity,
 Update total price after change product quantity
 
-Other Resources:
-Retrieve authenticated user's orders
-
+Order Resources:
+Non-admin User checkout (Create Order)
 
 
 Features by Student-2
@@ -56,9 +55,13 @@ Get user's Cart,
 Remove item from the user's cart,
 Clear the user's cart
 
-Added Features:
-Checkout an item from the user's cart
+Order Resources:
+Retrieve all orders (Admin only),
+Non-admin retrieve user orders,
 
 Other Resources:
-Non-admin User checkout (Create Order),
-Retrieve all orders (Admin only)
+Non-admin user checkout an item from the user's cart(Create order),
+Update cart remaining items and total price after an item checked out,
+Non-admin change order status
+
+

@@ -9,7 +9,7 @@ router.post("/login", userController.loginUser);
 
 router.get("/details", verify, userController.getProfile);
 
-router.patch("/:id/set-as-admin", verify, verifyAdmin, userController.setAsAdmin);
+router.put("/:id/setAsAdmin", verify, verifyAdmin, userController.setAsAdmin);
 
 router.patch('/update-password', verify, userController.updatePassword);
 

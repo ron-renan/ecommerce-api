@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const secret = process.env.SESSION_SECRET;
+const secret = "ECommerceAPI";
 // [Section] JSON Web Tokens
 /*
 - JSON Web Token or JWT is a way of securely passing information from the server to the client or to other parts of a server

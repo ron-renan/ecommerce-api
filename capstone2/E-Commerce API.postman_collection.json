@@ -1,0 +1,827 @@
+{
+	"info": {
+		"_postman_id": "195075b2-a0af-4cbf-8eca-b43e3537ee37",
+		"name": "E-Commerce API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32756881"
+	},
+	"item": [
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\" : \"Hidetoshi\",\r\n    \"lastName\" : \"Dekisugi\",\r\n    \"email\" : \"dekisugi@gmail.com\",\r\n    \"mobileNo\" : \"09190040006\",\r\n    \"password\" : \"therichkid456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/users/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"shisuka@gmail.com\",\r\n    \"password\" : \"cinderella123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/users/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "details",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MjY3MzM3ODljNTVhNjIyYWRmZmI2MiIsImVtYWlsIjoic2hpc3VrYUBnbWFpbC5jb20iLCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNzE0Mzg2MjkyfQ.52fCIAG5DlhT7VYjcF0OEWeKBwHq68YquqZzRZipc3g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/users/details",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"details"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "set as admin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MjY3MWQ1ODljNTVhNjIyYWRmZmI2MCIsImVtYWlsIjoibm9iaXRhQGdtYWlsLmNvbSIsImlzQWRtaW4iOnRydWUsImlhdCI6MTcxNDM5MTMxOX0.Ym_BrG67jUtbe0l0IdBBobSH907Wf7DMU7oMD5V6_UA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/users/6627450cb5da48729e7b593c/setAsAdmin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"6627450cb5da48729e7b593c",
+								"setAsAdmin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update-password",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MjY3MWQ1ODljNTVhNjIyYWRmZmI2MCIsImVtYWlsIjoibm9iaXRhQGdtYWlsLmNvbSIsImlzQWRtaW4iOnRydWUsImlhdCI6MTcxNDM4NzI3Nn0.XaUsIwgErJS9k6WZXLHNijNgmfeOpAinnVR5rdUjvOk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \r\n    \"currentPassword\" : \"crybaby321\",\r\n    \"newPassword\" : \"california123\" \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/users/update-password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"update-password"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "product",
+			"item": [
+				{
+					"name": "create product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MjY3MWQ1ODljNTVhNjIyYWRmZmI2MCIsImVtYWlsIjoibm9iaXRhQGdtYWlsLmNvbSIsImlzQWRtaW4iOnRydWUsImlhdCI6MTcxMzg2ODAzN30.289HMT7mrFeFHc2QmJwWuyyK6kwwsUajnObpdTSAWyg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"Hailey Hankey Top & Skirt\",\r\n    \"description\" : \"Fabric: Top - Knitted Skirt- Cotton Spandex Sizing: XS 6mos -18mos Small 1-3yrs old Medium 4-6 yrs old\",\r\n    \"price\": 99\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/products/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"products",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "all products",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MjY3MWQ1ODljNTVhNjIyYWRmZmI2MCIsImVtYWlsIjoibm9iaXRhQGdtYWlsLmNvbSIsImlzQWRtaW4iOnRydWUsImlhdCI6MTcxNDM4NzI3Nn0.XaUsIwgErJS9k6WZXLHNijNgmfeOpAinnVR5rdUjvOk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/products/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"products",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "product details",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/products/66278f62021d1695c45fc7c1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"products",
+								"66278f62021d1695c45fc7c1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "archive product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MjY3MWQ1ODljNTVhNjIyYWRmZmI2MCIsImVtYWlsIjoibm9iaXRhQGdtYWlsLmNvbSIsImlzQWRtaW4iOnRydWUsImlhdCI6MTcxNDM4NzI3Nn0.XaUsIwgErJS9k6WZXLHNijNgmfeOpAinnVR5rdUjvOk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/products/66278f62021d1695c45fc7c1/archive",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"products",
+								"66278f62021d1695c45fc7c1",
+								"archive"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "active product",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/products/active",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"products",
+								"active"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "activate product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MjY3MWQ1ODljNTVhNjIyYWRmZmI2MCIsImVtYWlsIjoibm9iaXRhQGdtYWlsLmNvbSIsImlzQWRtaW4iOnRydWUsImlhdCI6MTcxNDM4NzI3Nn0.XaUsIwgErJS9k6WZXLHNijNgmfeOpAinnVR5rdUjvOk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/products/662796672fb2168b4c5132a4/activate",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"products",
+								"662796672fb2168b4c5132a4",
+								"activate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MjY3MWQ1ODljNTVhNjIyYWRmZmI2MCIsImVtYWlsIjoibm9iaXRhQGdtYWlsLmNvbSIsImlzQWRtaW4iOnRydWUsImlhdCI6MTcxNDM4NzI3Nn0.XaUsIwgErJS9k6WZXLHNijNgmfeOpAinnVR5rdUjvOk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Hankey Top & Skirt\",\r\n    \"description\": \"Brand: Hailey Fabric: Top - Knitted Skirt- Cotton Spandex Sizing: XS 6mos -18mos Small 1-3yrs old Medium 4-6 yrs old\",\r\n    \"price\": 10000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/products/66278f62021d1695c45fc7c1/update",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"products",
+								"66278f62021d1695c45fc7c1",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "searchByName",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"productName\" : \"Apple Watch\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/products/searchByName",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"products",
+								"searchByName"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "searchByPrice",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"minPrice\": 50,\r\n    \"maxPrice\": 200\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/products/searchByPrice",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"products",
+								"searchByPrice"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "cart",
+			"item": [
+				{
+					"name": "get user cart",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MjY3MzM3ODljNTVhNjIyYWRmZmI2MiIsImVtYWlsIjoic2hpc3VrYUBnbWFpbC5jb20iLCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNzE0MzkwNjY0fQ.HlzHDwK-yfpvimkH-lu3K8AkfmgW0i43a5Nolfrt2UQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/cart/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"cart",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addToCart",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MjY3MzM3ODljNTVhNjIyYWRmZmI2MiIsImVtYWlsIjoic2hpc3VrYUBnbWFpbC5jb20iLCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNzE0MzkwNjY0fQ.HlzHDwK-yfpvimkH-lu3K8AkfmgW0i43a5Nolfrt2UQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"productId\": \"662796672fb2168b4c5132a4\",\r\n\"quantity\" : 1\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/cart/addToCart",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"cart",
+								"addToCart"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateQuantity",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MjY3MzM3ODljNTVhNjIyYWRmZmI2MiIsImVtYWlsIjoic2hpc3VrYUBnbWFpbC5jb20iLCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNzE0MzkwNjY0fQ.HlzHDwK-yfpvimkH-lu3K8AkfmgW0i43a5Nolfrt2UQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"productId\": \"662796672fb2168b4c5132a4\",\r\n\"quantity\" : 2\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/cart/updateQuantity",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"cart",
+								"updateQuantity"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "removeFromCart",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MjY3MzM3ODljNTVhNjIyYWRmZmI2MiIsImVtYWlsIjoic2hpc3VrYUBnbWFpbC5jb20iLCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNzE0MzkwNjY0fQ.HlzHDwK-yfpvimkH-lu3K8AkfmgW0i43a5Nolfrt2UQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/cart/662796672fb2168b4c5132a4/removeFromCart",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"cart",
+								"662796672fb2168b4c5132a4",
+								"removeFromCart"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "clearCart",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MjY3MzM3ODljNTVhNjIyYWRmZmI2MiIsImVtYWlsIjoic2hpc3VrYUBnbWFpbC5jb20iLCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNzE0MzkwNjY0fQ.HlzHDwK-yfpvimkH-lu3K8AkfmgW0i43a5Nolfrt2UQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/cart/clearCart",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"cart",
+								"clearCart"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "order",
+			"item": [
+				{
+					"name": "checkout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MjY3MzM3ODljNTVhNjIyYWRmZmI2MiIsImVtYWlsIjoic2hpc3VrYUBnbWFpbC5jb20iLCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNzE0MzkwNjY0fQ.HlzHDwK-yfpvimkH-lu3K8AkfmgW0i43a5Nolfrt2UQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/order/checkout",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"order",
+								"checkout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "all orders",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MjY3MWQ1ODljNTVhNjIyYWRmZmI2MCIsImVtYWlsIjoibm9iaXRhQGdtYWlsLmNvbSIsImlzQWRtaW4iOnRydWUsImlhdCI6MTcxNDM4NzI3Nn0.XaUsIwgErJS9k6WZXLHNijNgmfeOpAinnVR5rdUjvOk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/order/all-orders",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"order",
+								"all-orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "my orders",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MjY3MzM3ODljNTVhNjIyYWRmZmI2MiIsImVtYWlsIjoic2hpc3VrYUBnbWFpbC5jb20iLCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNzE0MzkwNjY0fQ.HlzHDwK-yfpvimkH-lu3K8AkfmgW0i43a5Nolfrt2UQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/order/my-orders",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"order",
+								"my-orders"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "checkout-item",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MjY3M2U5ODljNTVhNjIyYWRmZmI2NiIsImVtYWlsIjoidGFrZXNoaUBnbWFpbC5jb20iLCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNzE0MDk3MTQyfQ.x1iuvoi5eUbaYHkaavFlHzhesKMSZmFfTtbvyAPfjfQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"productId\": \"662790bb021d1695c45fc7c4\",\r\n\"quantity\" : 1\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/cart/checkout-item",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"cart",
+						"checkout-item"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "pending orders",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MjY3MWQ1ODljNTVhNjIyYWRmZmI2MCIsImVtYWlsIjoibm9iaXRhQGdtYWlsLmNvbSIsImlzQWRtaW4iOnRydWUsImlhdCI6MTcxNDI2MDYyN30.9FGInPfgVz7dSA-VFpPbf-MHWeIXCQVxROpmzn1pleE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/order/pending-orders",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"order",
+						"pending-orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update order status",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MjY3MzM3ODljNTVhNjIyYWRmZmI2MiIsImVtYWlsIjoic2hpc3VrYUBnbWFpbC5jb20iLCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNzE0MzU5MDUwfQ.05JtwzBb_SnvtjsC18MNcaLC-A8q0HQmMk2MCSzyMRM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"orderId\" : \"662a60848e2301e6868100b5\",\r\n    \"status\": \"Completed\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/order/updateOrderStatus",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"order",
+						"updateOrderStatus"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

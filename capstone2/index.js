@@ -10,6 +10,7 @@ const cors = require('cors');
 const userRoutes = require('./routes/user')
 const productRoutes = require('./routes/product')
 const cartRoutes = require('./routes/cart')
+const orderRoutes = require('./routes/order')
 
 
 const app = express();
@@ -20,7 +21,7 @@ app.use(express.urlencoded({extended: true}));
 app.use(cors());
 
 app.use(session({
-	secret: process.env.SESSION_SECRET,
+	secret: ("/auth.js"),
 	resave: false,
 	saveUninitialized: false
 }));
@@ -31,13 +32,14 @@ mongoose.connection.once('open', () => console.log('Now connected to MongoDB Atl
 app.use("/users",  userRoutes)
 app.use("/products", productRoutes)
 app.use("/cart", cartRoutes)
+app.use("/order", orderRoutes)
 
 
 
 //"process.env.PORT || port" will use the environment variable if it is available OR will used port 4000 if none defined
 //This syntax will allow flexibility when using the application locally
 if(require.main === module){
-	app.listen(process.env.PORT || port, () => console.log(`API is now online on port ${process.env.PORT || port}`));
+	app.listen(port, () => console.log(`API is now online on port ${port}`));
 
 }
 module.exports = {app, mongoose};

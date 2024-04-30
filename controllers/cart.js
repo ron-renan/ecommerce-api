@@ -85,6 +85,7 @@ module.exports.addToCart = async (req, res) => {
   }
 };
 
+
 module.exports.updateCartItemQuantity = async (req, res) => {
   try {
     const { productId, quantity } = req.body;

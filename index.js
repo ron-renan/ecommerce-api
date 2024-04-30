@@ -14,7 +14,7 @@ const orderRoutes = require('./routes/order')
 
 
 const app = express();
-const port = 3000;
+const port = 4003;
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
@@ -29,10 +29,11 @@ app.use(session({
 mongoose.connect("mongodb+srv://admin:admin1234@wdc028-course-booking.hdugpfx.mongodb.net/e-commerce-API?retryWrites=true&w=majority");
 mongoose.connection.once('open', () => console.log('Now connected to MongoDB Atlas.'));
 
-app.use("/users",  userRoutes)
-app.use("/products", productRoutes)
-app.use("/cart", cartRoutes)
-app.use("/order", orderRoutes)
+app.use("/b3/users",  userRoutes)
+app.use("/b3/products", productRoutes)
+app.use("/b3/cart", cartRoutes)
+app.use("/b3/order", orderRoutes)
+
 
 
 

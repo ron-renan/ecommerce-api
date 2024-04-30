@@ -34,7 +34,10 @@ Update subtotal after change product quantity,
 Update total price after change product quantity
 
 Order Resources:
-Non-admin User checkout (Create Order)
+Non-admin User checkout (Create Order),
+Find the user cart,
+Check if the user's cart contains item,
+Clear the user's cart after the checkout or creating an order
 
 
 Features by Student-2
@@ -62,6 +65,7 @@ Non-admin retrieve user orders,
 Other Resources:
 Non-admin user checkout an item from the user's cart(Create order),
 Update cart remaining items and total price after an item checked out,
+Retrieve Pending orders (Admin only),
 Non-admin change order status
 
 

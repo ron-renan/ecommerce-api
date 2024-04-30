@@ -21,7 +21,7 @@ app.use(express.urlencoded({extended: true}));
 app.use(cors());
 
 app.use(session({
-	secret: ("/auth.js"),
+	secret: ("/auth"),
 	resave: false,
 	saveUninitialized: false
 }));

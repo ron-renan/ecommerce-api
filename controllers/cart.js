@@ -78,10 +78,10 @@ module.exports.addToCart = async (req, res) => {
     await userCart.save();
 
     // Send a success response
-    res.status(200).json({ message: 'Item added to cart successfully', cart: userCart });
+    return res.status(200).json({ message: 'Item added to cart successfully', cart: userCart });
   } catch (error) {
     console.error('Error adding item to cart:', error);
-    res.status(500).json({ message: 'Internal server error' });
+    return res.status(500).json({ message: 'Internal server error' });
   }
 };
 
@@ -127,10 +127,10 @@ module.exports.updateCartItemQuantity = async (req, res) => {
     await userCart.save();
 
     // Send a success response
-    res.status(200).json({ message: 'Cart item quantity updated successfully', cart: userCart });
+    return res.status(200).json({ message: 'Cart item quantity updated successfully', cart: userCart });
   } catch (error) {
     console.error('Error updating cart item quantity:', error);
-    res.status(500).json({ message: 'Internal server error' });
+    return res.status(500).json({ message: 'Internal server error' });
   }
 };
 
@@ -176,10 +176,10 @@ exports.removeFromCart = async (req, res) => {
     // Save the updated cart
     await cart.save();
 
-    res.json({ message: 'Product removed from the cart successfully', cart: cart });
+    return res.status(200).json({ message: 'Product removed from the cart successfully', cart: cart });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
+    return res.status(500).json({ message: 'Internal server error' });
   }
 };
 module.exports.clearCart = async (req, res) => {
@@ -197,10 +197,10 @@ module.exports.clearCart = async (req, res) => {
       return res.status(404).json({ message: 'Cart not found' });
     }
 
-    res.status(200).json({ message: 'Cart cleared successfully', cart });
+    return res.status(200).json({ message: 'Cart cleared successfully', cart });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
+    return res.status(500).json({ message: 'Internal server error' });
   }
 };
 

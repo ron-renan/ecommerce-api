@@ -39,10 +39,10 @@ module.exports.checkout = async (req, res) => {
       { $set: { items: [], totalPrice: 0, orderedOn: undefined } }
     );
 
-    res.status(200).json({ message: 'Order placed successfully', order: newOrder });
+    return res.status(200).json({ message: 'Order placed successfully', order: newOrder });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
+    return res.status(500).json({ message: 'Internal server error' });
   }
 };
 
@@ -51,15 +51,15 @@ module.exports.getAllOrders = async (req, res) => {
     try {
         // Check if the user is an admin
         if (!req.user.isAdmin) {
-            return res.status(403).json({ message: "Access denied. Only admin users can retrieve all orders." });
+            return res.status(403).json({ message: "Access denied. Unauthorized user." });
         }
 
         // Retrieve all orders
         const orders = await Order.find({}).populate('userId', 'username').populate('productsOrdered.productId', 'name' );
 
-        return res.json(orders);
+        return res.status(200).json(orders);
     } catch (error) {
-        res.status(500).json({ message: error.message });
+       return res.status(500).json({ message: error.message });
     }
 };
     
@@ -143,10 +143,10 @@ module.exports.checkoutItem = async (req, res) => {
         });
         await order.save();
 
-        res.status(200).json({ message: 'Order placed successfully', order });
+       return res.status(200).json({ message: 'Order placed successfully', order });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'Internal server error' });
+        return res.status(500).json({ error: 'Internal server error' });
     }
 };
 
@@ -188,9 +188,9 @@ module.exports.updateOrderStatus = async (req, res) => {
             return res.status(404).json({ message: "Order not found or unauthorized" });
         }
 
-        res.json({ message: "Order status updated successfully", order });
+       return res.status(200).json({ message: "Order status updated successfully", order });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: "Internal server error" });
+        return res.status(500).json({ message: "Internal server error" });
     }
 };

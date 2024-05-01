@@ -16,7 +16,7 @@ module.exports.createProduct = (req, res) => {
     }
     return newProduct.save()
         .then(savedProduct => {
-            res.status(201).send({savedProduct})
+            return res.status(201).send({savedProduct})
         })
         .catch(saveErr => {
             console.error("Error in saving the product:", saveErr)
@@ -35,14 +35,14 @@ module.exports.getAllProducts = (req, res) => {
     return Product.find({})
         .then(products => {
             if (products.length > 0){
-                res.status(200).send(products)
+               return res.status(200).send(products)
             }else{
-                return res.status(200).send({message: 'No product found.'})
+                return res.status(404).send({message: 'No product found.'})
             }            
         })
         .catch(err => {
             console.error("Error in finding all products:", err)
-            res.status(500).send({error: 'Error finding all products'});
+           return res.status(500).send({error: 'Error finding all products'});
     })
 }
      
@@ -52,14 +52,14 @@ module.exports.getActiveProduct = (req, res) => {
     return Product.find({isActive: true})
     .then(products => {
         if(products.length > 0){
-            res.status(200).send({products})
+           return res.status(200).send({products});
         }else{
-           res.status(200).send({message: 'No active product found.'}) 
+           return res.status(404).send({message: 'No active product found.'}) ;
         }
     })
     .catch(err =>{
         console.log('Error in finding active products:', err)
-        res.status(500).send({error: 'Error finding active products'});
+        return res.status(500).send({error: 'Error finding active products'});
     }) 
 }
 
@@ -68,31 +68,32 @@ module.exports.getProduct = (req, res) => {
     const productId = req.params.productId;
     return Product.findById(productId)
         .then(product => {
-            res.status(200).send(product);
+            return res.status(200).send(product);
         })
         .catch(err =>{
         console.log('Failed to fetch product', err)
-        res.status(500).send({error: 'Failed to fetch product'});
+        return res.status(500).send({error: 'Failed to fetch product'});
     }) 
 }
 
-module.exports.updateProduct = (req, res) =>{
+module.exports.updateProduct = async (req, res) =>{
     const productId = req.params.productId;
     const updatedProduct = {
         name : req.body.name,
         description : req.body.description,
         price : req.body.price
     }
+
     return Product.findByIdAndUpdate(productId, updatedProduct)
     .then(updatedProduct => {
         if (!updatedProduct){
-            res.status(404).send({error: 'Product not found'});
+            return res.status(404).send({error: 'Product not found'});
         }else {
-            res.status(200).send({message: 'Product updated successfully', updatedProduct: updatedProduct})
+            return res.status(200).send({message: 'Product updated successfully', updatedProduct: updatedProduct})
         }
     }).catch(err =>{
-        console.log('Error in updating active a product:', err)
-        res.status(500).send({error: 'Error updating a product'});
+        console.log('Error in updating a product:', err)
+        return res.status(500).send({error: 'Error updating a product'});
 })
 }
 
@@ -105,9 +106,9 @@ module.exports.archiveProduct = (req, res) =>{
     return Product.findByIdAndUpdate(req.params.productId, updateActiveField)
     .then(product => {
         if (product) {
-            res.status(200).send({archiveProduct: product, message:'Product archived successfully'});
+            return res.status(200).send({archiveProduct: product, message:'Product archived successfully'});
         } else {
-            res.status(400).send({error: 'Product not found'});
+            return res.status(400).send({error: 'Product not found'});
         }
     })
      .catch(err => {
@@ -129,12 +130,12 @@ module.exports.activateProduct = (req, res) => {
         return Product.findByIdAndUpdate(req.params.productId, updateActiveField)
         .then(product => {
             if (product) {
-                res.status(200).send({message: 'Product activated successfully'})
+                return res.status(200).send({message: 'Product activated successfully'})
             } else {
-                res.status(404).send({error: 'Product not found'})         
+                return res.status(404).send({error: 'Product not found'})         
         }   
     })
-    .catch(err => res.status(500).send(err));
+    .catch(err => { return res.status(500).send(err)});
     }
     else{
         return res.status(403).send({error: 'You do not have rights to do this'});
@@ -149,10 +150,10 @@ module.exports.searchProductByName = async (req, res) => {
     // Search for products by product name
     const products = await Product.find({ name: { $regex: productName, $options: 'i' } });
 
-    res.status(200).json({ products });
+    return res.status(200).json({ products });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal server error' });
+    return res.status(500).json({ error: 'Internal server error' });
   }
 }
 module.exports.searchProductByPriceRange = async (req, res) => {

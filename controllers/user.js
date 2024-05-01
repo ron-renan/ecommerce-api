@@ -3,47 +3,43 @@ const User = require ("../models/User");
 const auth = require("../auth");
 
 module.exports.registerUser = async (req, res) => {
+  const { firstName, lastName, email, mobileNo } = req.body;
 
-	const checkUser = await User.findOne({email: req.body.email});
+  // Check if email is in valid format
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    return res.status(406).json({ error: 'Invalid email format' });
+  }
 
-    if (checkUser){
+  // Check if mobileNo is at least 11 digits
+  if (mobileNo.length < 11) {
+    return res.status(406).json({ error: 'Mobile number must be at least 11 digits' });
+  }
 
-        if (checkUser.firstName === req.body.firstName && checkUser.lastName === req.body.lastName){
-            return res.status(400).json({error: 'User is already registered. Please proceed to sign in.'});    
-        } else {
-            return res.status(400).json({error: 'Email address already used by other user. Please use other email address.'})
-        }
-        
+  try {
+    // Check if user already exists
+    const existingUser = await User.findOne({ $or: [{ email }, { mobileNo }] });
+    if (existingUser) {
+      return res.status(400).json({ error: 'User with this email or mobile number already exists' });
     }
-	// Checks if the email is in the right format
-   if (!req.body.email.includes("@")){
-       return res.status(400).send({error: "Email Invalid"});
-   }
-		// Checks if the mobile number has the correct number of characters
-      else if (req.body.mobileNo.length !== 11){
-            return res.status(400).send({error: "Mobile number invalid"});
-      }
-		// Checks if the password has atleast 8 characters
-        else if (req.body.password.length < 8) {
-            return res.status(400).send({error: "Password must be at least 8 characters"});
-            // If all needed requirements are achieved
-            } else {
-                let newUser = new User({
-                    firstName : req.body.firstName,
-                    lastName : req.body.lastName,
-                    email : req.body.email,
-                    mobileNo : req.body.mobileNo,
-                    password : bcrypt.hashSync(req.body.password, 10)
-               })
 
-                return newUser.save()
-                .then((result) => res.status(201).send({message: 'Registered Successfully'}))
-                .catch(err =>{
-        		console.log('Error in Save', err)
-        		res.status(500).send({error: 'Error in Save'});
-            	})
-            }
-}
+    // Create new user
+    const newUser = new User({
+      firstName,
+      lastName,
+      email,
+      mobileNo,
+      password: bcrypt.hashSync(req.body.password, 10)
+    });
+
+    await newUser.save();
+    return res.status(201).json(newUser);
+  } catch (error) {
+    console.error('Error registering user:', error);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
 
 module.exports.loginUser = (req, res) => {
 	
@@ -55,21 +51,21 @@ module.exports.loginUser = (req, res) => {
 			const isPasswordCorrect = bcrypt.compareSync(req.body.password, result.password);
 			if(isPasswordCorrect){
 				
-				return res.status(200).send({ access : auth.createAccessToken(result)})
+				return res.status(200).send({ access : auth.createAccessToken(result)});
 			}else{
 				return res.status(401).send({error: "Email and password do not match."});
 			}
 		}
 	})
 	.catch(err =>{
-        		console.log('Error in find', err)
+        		console.log('Error in find', err);
         		res.status(500).send({error: 'Error in find'});
             	})
 }else{
-	return res.status(400).send({error: 'Invalid in email'})
+	return res.status(406).send({error: 'Invalid in email'});
 }
 	
-}
+};
 
 module.exports.getProfile = (req, res) => {
 		    const userId = req.user.id;
@@ -87,7 +83,7 @@ module.exports.getProfile = (req, res) => {
 	        })
 	        .catch(err => {
 	        	console.error("Error in fetching user profile", err)
-	        	return res.status(500).send({ error: 'Failed to fetch user profile' })
+	        	return res.status(500).send({ error: 'Failed to fetch user profile' });
 	        });
 		}
 
@@ -108,15 +104,20 @@ module.exports.setAsAdmin = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
+    // Check if the user to be made admin is already an admin
+    if (user.isAdmin) {
+      return res.status(400).json({ message: "User is already an admin." });
+    }
+
     user.isAdmin = true;
     await user.save();
 
-    return res.status(200).json({ message: "User isAdmin status updated successfully" });
+    return res.status(200).json({ message: "User successfully set as admin" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Internal Server Error" });
+   return res.status(500).json({ message: "Internal Server Error" });
   }
-}
+};
 
 
 module.exports.updatePassword = async (req, res) => {
@@ -139,21 +140,21 @@ module.exports.updatePassword = async (req, res) => {
     bcrypt.compare(currentPassword, userToUpdate.password, (err, result) =>{
 
     	if (err){
-    		return res.status(400).send({error: 'Error in find'})
+    		return res.status(400).send({error: 'Error in find'});
     	} 
     	if (result){
     		console.log('Password match');
     		userToUpdate.password = hashedPassword;
     		userToUpdate.save();
-    		res.status(200).json({message: 'Password updated Successfully', updatedUser : userToUpdate});
+    		return res.status(200).json({message: 'Password updated Successfully', updatedUser : userToUpdate});
     	}else{
-    		return res.status(200).send('Current password did not match. Try again!');
+    		return res.status(401).send('Current password did not match. Try again!');
     	}
     })
 
     } catch (error){
 		console.error(error);
-		res.status(500).json({message: 'Internal server error'});
+		return res.status(500).json({message: 'Internal server error'});
 	}
 }
 

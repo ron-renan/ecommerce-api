@@ -10,7 +10,8 @@ const userSchema = new mongoose.Schema({
 	},
 	email : {
 		type : String,
-		required: [true, 'Email is required']
+		required: [true, 'Email is required'],
+		unique: true
 	},
 	password : {
 		type : String,
@@ -22,7 +23,8 @@ const userSchema = new mongoose.Schema({
 	},
 	mobileNo : {
 		type : String,
-		required: [true, 'Mobile number is required']
+		required: [true, 'Mobile number is required'],
+		unique: true
 	}
 
 });

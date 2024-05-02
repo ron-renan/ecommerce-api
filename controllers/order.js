@@ -33,11 +33,12 @@ module.exports.checkout = async (req, res) => {
     
     await newOrder.save();
 
-    // Clear the cart
-    await Cart.findOneAndUpdate(
-      { userId },
-      { $set: { items: [], totalPrice: 0, orderedOn: undefined } }
-    );
+    // If the cart is empty after checkout, clear the cart
+        if (cart.items.length === 0) {
+            await Cart.findOneAndDelete({userId});
+        } else {
+            await cart.save();
+        }
 
     return res.status(200).json({ message: 'Order placed successfully', order: newOrder });
   } catch (error) {
@@ -85,71 +86,6 @@ module.exports.getUserOrders = async (req, res) => {
         return res.status(500).json({ message: "Internal Server Error" });
     }
 };
-
-// Controller function to checkout an item from the user's cart
-module.exports.checkoutItem = async (req, res) => {
-    try {
-        // Extract product id and quantity from request body
-        const { productId, quantity } = req.body;
-
-        // Retrieve authenticated user id from token
-        const userId = req.user.id;
-
-        // Check if the user is admin
-        const user = await User.findById(userId);
-        if (req.user.isAdmin) {
-            return res.status(403).json({ error: 'Admin user cannot checkout items' });
-        }
-
-        // Find the user's cart based on their user ID
-    let cart = await Cart.findOne({ userId });
-
-
-        // Check if the product exists in the cart
-        const index = cart.items.findIndex(item => item.productId.toString() === productId);
-        if (index === -1) {
-            return res.status(404).json({ error: 'Product not found in the cart' });
-        }
-
-        // Check if the quantity in the cart is sufficient
-        if (cart.items[index].quantity < quantity) {
-            return res.status(400).json({ error: 'Insufficient quantity in the cart' });
-        }
-       
-
-        // Calculate subtotal and update cart
-        const product = await Product.findById(productId);
-        cart.items[index].quantity -= quantity;
-        const subTotal = cart.items[index].quantity * product.price;
-        cart.items[index].subTotal -= subTotal;
-
-        //Calculate total price and update cart
-        let totalPrice = 0;
-        cart.items.forEach(item => {
-
-        totalPrice += item.subTotal;
-        });
-        cart.totalPrice = totalPrice;
-
-        // Update user's cart
-        user.cart = cart;
-        await user.save();
-
-        // Create order record
-        const order = new Order({
-            userId,
-            productsOrdered: [{ productId, quantity, subTotal }],
-            totalPrice
-        });
-        await order.save();
-
-       return res.status(200).json({ message: 'Order placed successfully', order });
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({ error: 'Internal server error' });
-    }
-};
-
 
 
 module.exports.getPendingOrders = async (req, res) => {

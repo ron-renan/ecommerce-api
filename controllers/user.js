@@ -59,7 +59,7 @@ module.exports.loginUser = (req, res) => {
 	})
 	.catch(err =>{
         		console.log('Error in find', err);
-        		res.status(500).send({error: 'Error in find'});
+        		return res.status(500).send({error: 'Error in find'});
             	})
 }else{
 	return res.status(406).send({error: 'Invalid in email'});

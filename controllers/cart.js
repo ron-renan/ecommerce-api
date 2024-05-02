@@ -187,11 +187,7 @@ module.exports.clearCart = async (req, res) => {
 
   try {
     // Find the user's cart and clear it
-    const cart = await Cart.findOneAndUpdate(
-      {userId },
-      { $set: { items: [] }, totalPrice: 0, orderedOn: undefined },
-      { new: true }
-    );
+    const cart = await Cart.findOneAndDelete({userId});
 
     if (!cart) {
       return res.status(404).json({ message: 'Cart not found' });

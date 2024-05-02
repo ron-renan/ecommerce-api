@@ -9,8 +9,6 @@ router.get('/all-orders', verify, verifyAdmin, orderController.getAllOrders);
 
 router.get('/my-orders', verify, orderController.getUserOrders);
 
-router.post('/checkout-item', verify, orderController.checkoutItem);
-
 router.post('/pending-orders', verify, verifyAdmin, orderController.getPendingOrders);
 
 router.patch('/updateOrderStatus', verify, orderController.updateOrderStatus);

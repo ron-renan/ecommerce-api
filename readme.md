@@ -63,8 +63,6 @@ Retrieve all orders (Admin only),
 Non-admin retrieve user orders,
 
 Other Resources:
-Non-admin user checkout an item from the user's cart(Create order),
-Update cart remaining items and total price after an item checked out,
 Retrieve Pending orders (Admin only),
 Non-admin change order status
 

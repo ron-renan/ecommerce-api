@@ -9,6 +9,8 @@ router.post("/login", userController.loginUser);
 
 router.get("/details", verify, userController.getProfile);
 
+router.get("/", verify, verifyAdmin, userController.getAllUsers);
+
 router.patch("/:id/setAsAdmin", verify, verifyAdmin, userController.setAsAdmin);
 
 router.patch('/update-password', verify, userController.updatePassword);

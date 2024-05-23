@@ -8,7 +8,7 @@ module.exports.registerUser = async (req, res) => {
   // Check if email is in valid format
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
-    return res.status(406).json({ error: 'Invalid email format' });
+    return res.status(406).json({ error: 'Invalid email' });
   }
 
   // Check if mobileNo is at least 11 digits
@@ -31,9 +31,15 @@ module.exports.registerUser = async (req, res) => {
       mobileNo,
       password: bcrypt.hashSync(req.body.password, 10)
     });
+    return newUser.save()
+        .then((result) => res.status(201).send({message: 'Registered Successfully'}))
+        .catch(err =>{
+        console.log('Error in Save', err)
+        return res.status(500).send({error: 'Error in Save'});
+              })
 
-    await newUser.save();
-    return res.status(201).json(newUser);
+    // await newUser.save();
+    // return res.status(201).json.send (newUser);
   } catch (error) {
     console.error('Error registering user:', error);
     return res.status(500).json({ error: 'Internal server error' });
@@ -157,4 +163,14 @@ module.exports.updatePassword = async (req, res) => {
 		return res.status(500).json({message: 'Internal server error'});
 	}
 }
+
+module.exports.getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find({});
+    res.status(200).json(users);
+  } catch (err) {
+    console.error('Failed to fetch users', err);
+    res.status(500).json({ error: 'Failed to fetch users' });
+  }
+};
 

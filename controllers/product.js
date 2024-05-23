@@ -16,7 +16,7 @@ module.exports.createProduct = (req, res) => {
     }
     return newProduct.save()
         .then(savedProduct => {
-            return res.status(201).send({savedProduct})
+            return res.status(201).send({savedProduct, message:'You have successfully added a product.'})
         })
         .catch(saveErr => {
             console.error("Error in saving the product:", saveErr)
@@ -66,8 +66,11 @@ module.exports.getActiveProduct = (req, res) => {
 
 module.exports.getProduct = (req, res) => {
     const productId = req.params.productId;
-    return Product.findById(productId)
+    Product.findById(productId)
         .then(product => {
+            if (!product){
+                return res.status(404).send({error: 'Product not found'});
+            }
             return res.status(200).send(product);
         })
         .catch(err =>{

@@ -73,7 +73,7 @@ module.exports.getUserOrders = async (req, res) => {
      const userId = req.user.id;
 
     // Retrieve the user's order based on their user ID
-    const userOrder = await Order.find({userId});
+    const userOrder = await Order.find({userId}).populate('productsOrdered.productId', 'name' );
     
     if (!userOrder) {
       return res.status(404).json({ message: 'No order found for this user' });

@@ -10,12 +10,13 @@ module.exports.getUserCart = async (req, res) => {
     const userId = req.user.id;
 
     // Retrieve the user's cart based on their user ID
-    const userCart = await Cart.findOne({ userId });
+    const userCart = await Cart.findOne({ userId }).populate('items.productId', 'name');
 
     if (!userCart) {
       return res.status(404).json({ message: 'Cart not found for this user' });
     }
       if (userCart.items.length === 0) {
+         
             return res.status(200).json({ message: "Your cart is empty." });
         }
 

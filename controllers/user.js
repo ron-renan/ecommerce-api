@@ -8,11 +8,13 @@ module.exports.registerUser = async (req, res) => {
   // Check if email is in valid format
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
+    res.setHeader('Cache-Control', 'no-store');
     return res.status(406).json({ error: 'Invalid email' });
   }
 
   // Check if mobileNo is at least 11 digits
   if (mobileNo.length < 11) {
+    res.setHeader('Cache-Control', 'no-store');
     return res.status(406).json({ error: 'Mobile number must be at least 11 digits' });
   }
 
@@ -20,6 +22,7 @@ module.exports.registerUser = async (req, res) => {
     // Check if user already exists
     const existingUser = await User.findOne({ $or: [{ email }, { mobileNo }] });
     if (existingUser) {
+      res.setHeader('Cache-Control', 'no-store');
       return res.status(400).json({ error: 'User with this email or mobile number already exists' });
     }
 
@@ -32,15 +35,21 @@ module.exports.registerUser = async (req, res) => {
       password: bcrypt.hashSync(req.body.password, 10)
     });
     return newUser.save()
-        .then((result) => res.status(201).send({message: 'Registered Successfully'}))
+        .then((result) => {
+          res.setHeader('Cache-Control', 'no-store');
+          res.status(201).send({message: 'Registered Successfully'
+        });
+        })
         .catch(err =>{
         console.log('Error in Save', err)
+        res.setHeader('Cache-Control', 'no-store');
         return res.status(500).send({error: 'Error in Save'});
               })
 
     // await newUser.save();
     // return res.status(201).json.send (newUser);
   } catch (error) {
+    res.setHeader('Cache-Control', 'no-store');
     console.error('Error registering user:', error);
     return res.status(500).json({ error: 'Internal server error' });
   }
@@ -174,3 +183,28 @@ module.exports.getAllUsers = async (req, res) => {
   }
 };
 
+// Added 5/29/20224 (For Update profile)
+module.exports.updateProfile = async (req, res) => {
+
+    const { firstName, lastName, mobileNumber } = req.body;
+    const userId = req.user.id; // Assuming you have middleware to extract user from JWT
+
+  try {
+
+    // Update user document
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { firstName, lastName, mobileNumber },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    return res.status(200).json({ message: 'Profile updated successfully', user: updatedUser });
+  } catch (error) {
+    console.error('Error updating profile:', error);
+    return res.status(500).json({ message: 'Failed to update profile' });
+  }
+};
